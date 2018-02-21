@@ -1,0 +1,722 @@
+$bwColor:
+	#333333 //1 黑
+	#666666 //2 ↓
+	#999999 //3 ↓
+	#dddddd //4 ↓
+	#eeeeee //5 ↓
+	#ffffff //6 白
+	;
+$amsColor://藍色系
+	#265a88 //1 深色
+	#337ab7 //2	↓↓
+	#428bca //3	↓↓
+	#d9edf7 //4	↓↓
+	#bce8f1 //5 淺色
+	;
+
+// 客製化字體大小
+$font_h1:25px;
+$font_h2:20px;
+$font_h3:16px;
+$font_p:14px;
+$font_span:14px;
+$head_height:50px;
+
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans);
+@import url(http://fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+@mixin borderRadius($num){
+	@if $num == top { border-radius:5px 5px 0 0;}
+  @else if $num == bottom { border-radius:0 0 5px 5px;}
+  @else if $num == small { border-radius:3px;}
+  @else { border-radius:5px;}
+}
+@mixin shadow($type){
+	@if $type == y { box-shadow: 0px 3px 3px rgba(15,15,15,0.6);}
+	@else if $type == inset { box-shadow: 0px 0px 5px rgba(15,15,15,1) inset;}
+	@else if $type == inset_light { box-shadow: 0px 0px 10px 2px rgba(15,15,15,0.3) inset;}
+	@else { box-shadow: 0px 0px 10px rgba(15,15,15,0.6);}
+}
+@mixin h1_reset{
+	h1{
+		margin-top:0;
+		margin-bottom:0;
+	}
+}
+@mixin text_align($type){
+	@if $type == center {text-align:center;}
+	@else if $type == left {text-align:left;}
+	@else if $type == right {text-align:right;}
+}
+@mixin padding_setting($type,$num){
+	@if $type == t_b {padding-top:$num * 10px;padding-bottom:$num * 10px;}
+	@else if $type == l_r {padding-left:$num * 10px;padding-right:$num * 10px;}
+	@else if $type == all {padding:$num * 10px !important;}
+	@else if $type == l {padding-left:$num * 10px;}
+	@else if $type == r {padding-right:$num * 10px;}
+}
+@mixin fixed_center{
+	position:fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin:auto;
+	z-index:9999;
+}
+
+html , body{
+	height:100%;
+}
+body{
+	min-width:768px;
+	width:100%;
+	font-family: 'Noto Sans TC','Josefin Sans', sans-serif;
+	h1{	font-size:$font_h1;	margin-top:0; margin-bottom:0;}
+	h2{	font-size:$font_h2;	}
+	h3{	font-size:$font_h3;	}
+	p{ font-size:$font_p; }
+	span{	font-size:$font_span;	}
+
+	footer{
+		@include text_align(center);
+		@include padding_setting(t_b,2);
+		margin-top:20px;
+	  background-image: linear-gradient(to top,#f8f8f8 0,#f0f0f0 100%);
+	  &.login_footer{
+	  	position:fixed;
+	  	bottom:0;
+	  	width:100%;
+	  }
+	}
+
+	////////////////////////////////////
+	.companyTitleStyle{
+		position:relative;
+		padding-top:5px;
+		margin-bottom:0 ;
+		text-align:center;
+		.font_h1{
+			font-size:$font_h1;
+		}
+		.font_p{
+			font-size:$font_p;
+		}
+		a{
+			position:absolute;
+			top:8px;
+			right:8px;
+		}
+	}
+	.text_left{
+		text-align:left !important;
+	}
+	////index通用的彈跳視窗
+	.prompt_body{
+		position:absolute;
+		top: 0;
+		left: 0;
+		background-color:rgba(55,55,55,.5);
+		width:100%;
+		height:100%;
+		z-index:50;
+		.prompt_box{
+			z-index: 100;
+			position:absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin:auto;
+			width:300px;
+			height:175px;
+			background-color:nth($bwColor,6);
+			@include borderRadius(none);
+			@include shadow(none);
+			@include text_align(center);
+			border-bottom:10px solid nth($amsColor,5);
+			h2{
+				margin-top:30px;
+			}
+			h3{
+				margin-top:0; margin-bottom:0;
+			}
+			.btn_yes , .btn_no{
+				margin-top:5px;
+			}
+		}
+	}
+
+	/////業務管理的彈跳視窗
+	.prompt_body_b{
+		display:none;
+		position:absolute;
+		top: 0;
+		left: 0;
+		background-color:rgba(55,55,55,.5);
+		width:100%;
+		height:100%;
+		z-index:50;
+		.prompt_box_b{
+			z-index: 100;
+			position:absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin:auto;
+			width:300px;
+			height:175px;
+			background-color:nth($bwColor,6);
+			@include borderRadius(none);
+			@include shadow(none);
+			@include text_align(center);
+			border-bottom:10px solid nth($amsColor,5);
+			h2{
+				margin-top:30px;
+			}
+			h3{
+				margin-top:0; margin-bottom:0;
+			}
+			.btn_yes , .btn_no{
+				margin-top:5px;
+			}
+		}
+	}
+	/////業務綁定成功的彈跳視窗
+	.prompt_body_success{
+		position:absolute;
+		top: 0;
+		left: 0;
+		background-color:rgba(55,55,55,.5);
+		width:100%;
+		height:100%;
+		z-index:50;
+		.prompt_box_success{
+			z-index: 100;
+			position:absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin:auto;
+			width:300px;
+			height:175px;
+			background-color:nth($bwColor,6);
+			@include borderRadius(none);
+			@include shadow(none);
+			@include text_align(center);
+			border-bottom:10px solid nth($amsColor,5);
+			h2{
+				margin-top:30px;
+			}
+			h3{
+				margin-top:0; margin-bottom:0;
+			}
+			.btn_yes , .btn_no{
+				margin-top:5px;
+			}
+		}
+	}
+	////login 登入////////////////////////////////////////////////
+	&.login_body{
+		width:100vw;
+		height:100vh;
+		text-align:center;
+		background-image: url(/images/iscar_bg.png);
+	}
+	.login_page{
+		.btn_login{
+			background-image:linear-gradient(rgba(242, 101, 49, 0.75), rgba(242, 101, 49, 0.7));
+			color:nth($bwColor,5);
+		}
+		
+		@include padding_setting(all,0);
+		.form_signin {
+			position:absolute;
+			top: 50%;
+			left:50%;
+			margin:-115px 0 0 -150px;
+			@include shadow(inset_light);
+		  max-width: 330px;
+		  @include padding_setting(all,3);
+			background-color:nth($bwColor,1);
+			@include h1_reset;
+			@include borderRadius(none);
+			h1{
+				@include text_align(center);
+				color:nth($bwColor,5);
+			}
+			.form_signin_heading{
+				margin-bottom: 10px;
+			}
+			.error_box{
+				margin-bottom: 10px;
+				font-weight: normal;
+				color:red;
+			}
+			.form-control{
+				position: relative;
+			  height: auto;
+			  -webkit-box-sizing: border-box;
+			     -moz-box-sizing: border-box;
+			          box-sizing: border-box;
+			  @include padding_setting(all,1);
+			  font-size: 16px;
+			  &:focus {
+				  z-index: 2;
+				}
+			}
+			input[type="email"] {
+			  margin-bottom: -1px;
+			  border-bottom-right-radius: 0;
+			  border-bottom-left-radius: 0;
+			}
+			input[type="password"] {
+			  margin-bottom: 10px;
+			  border-top-left-radius: 0;
+			  border-top-right-radius: 0;
+			}
+		}
+	}
+
+	.panel-heading{
+
+	}
+	.panel-body{
+		.test_style{
+			padding:15px;
+		}
+		.total_box{
+			border: 2px solid #28a4c9;
+			margin-bottom:15px;
+			border-radius:3px;
+		}
+		.alert_total{
+			span{
+				font-size:20px;
+			}
+		}
+		.btn_group{
+			.search_form{
+				.select_width{
+					width:75px;
+				}
+				.br_t_b_l{
+					border-top-left-radius: 4px;
+	    		border-bottom-left-radius: 4px;
+				}
+			}
+			.jumbotron{
+				margin-bottom:0;
+				span{
+					font-size:20px;
+					color:#F26531;
+				}
+			}
+			.isflag{
+				select{
+					margin-left:10px;
+				}
+			}
+			.input-group{
+				float: left;
+				margin-bottom:10px;
+				margin-right:10px;
+			}
+			.sb_label_setting{
+				line-height:34px;
+				span{
+					color:red;
+				}
+			}
+			@include padding_setting(all,1.5);
+			button,a{
+				margin-left:10px;
+			}
+			form{
+				margin-bottom:0;
+			}
+		}
+		.panel_subtitle{
+			@include padding_setting(t_b,1);
+			background-color: nth($bwColor,4);
+			&.appversion_style{
+				p{
+					margin:0;
+				}
+			}
+			form{
+				margin-bottom:0;
+			}
+			.sort_check{
+				cursor:pointer;
+			}
+			div{
+				border-right:2px solid nth($bwColor,6);
+				@include text_align(center);
+				&:last-child{
+					border-right:none;
+				}
+			}
+		}
+		.panel_form{
+			p{
+				margin-bottom:0;
+				@include padding_setting(all,2);
+				@include text_align(center);
+			}
+			form{
+				margin-bottom:0;
+				@include padding_setting(t_b,1);
+				@include text_align(center);
+				&:hover{
+					background-color:nth($amsColor,3);
+				}
+				&.select_case{
+					background-color:nth($amsColor,2);
+					color:nth($bwColor,6);
+				}
+			}
+			.m_clear,.s_clear,.b_clear{
+				margin:10px;
+			}
+			.property_code{
+				margin-bottom:20px;
+				.qas_box{
+					height:200px;
+				}
+			}
+			label.check_bg{
+				background-color:#ddd;
+				@include borderRadius(none);
+			}
+			.qas_box{
+				height:150px;
+				overflow-x:hidden;
+				overflow-y:auto;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				.title{
+					background-color:nth($bwColor,4);
+					@include padding_setting(t_b,.2);
+					border-left:2px solid nth($bwColor,3);
+					&:first-child{
+						border-style:none;
+					}
+				}
+				.label_style{
+					@include padding_setting(t_b,.5);
+					margin-bottom: 0;
+				}
+				.align_style{
+					@include text_align(center);
+				}
+				.property_result{
+					@include padding_setting(t_b,.2);
+					&:hover{
+						background-color:nth($bwColor,5);
+					}
+				}
+			}
+			.textarea_box{
+				margin-bottom:20px;
+				textarea{
+					border: 1px solid #ccc;
+					border-radius: 4px;
+				}
+			}
+			.topNews_form{
+					border-bottom:1px solid #ddd;
+					&:last-child{
+						border-style:none;
+					}
+			}
+		}
+
+		.panel_detail{
+			@include padding_setting(all,1.5);
+			.button_style{
+				text-align: center;
+				button{
+					&:first-child{
+						margin-top:13px;
+					}
+					&:last-child{
+						margin-top:6px;
+					}
+				}
+			}
+			.sunwaiuser_selectstyle{
+				select{
+					height:100px;
+				}
+			}
+			&.hostlistdetail_setting{
+				ul{
+					overflow:hidden;
+					list-style-type:none;
+					li{
+						span{
+							cursor:pointer;
+						}
+					}
+				}
+				.test_height{
+					height:0;
+				}
+			}
+			.label_style{
+				margin-top:6px;
+				margin-bottom:6px;
+			}
+			.task_interval{
+				.change_block{
+					&.everyweek,&.specifymonth,&.everymonth{
+						& > div{
+							margin-bottom:5px;
+						}
+					}
+					label{
+						font-weight: 400;
+					}
+					.select_elems{
+						width: 100%;
+						background-color: #fff;
+						border: 1px #ccc solid;
+						position: absolute;
+					  z-index: 1;
+					  text-decoration: none;
+					  list-style-type: none;
+					  padding-left: 0;
+						padding-right: 0;
+						li{
+							padding-left: 15px;
+							&:hover{
+								background-color: #ccc;
+								color: #333;
+							}
+							label{
+								width:100%;
+								span{
+									margin-left:5px;
+								}
+							}
+						}
+					}
+				}
+			}
+			.pwd_label{
+				@include text_align(center);
+				@include padding_setting(t_b,1);
+			}
+			.ud_form{
+				.error_box{
+					@include text_align(center);
+					color:red;
+				}
+			}
+			.error_style{
+				margin-top:7px;
+				margin-bottom:7px;
+				color:red;
+			}
+			.ua_box{
+				height:100px;
+				overflow-x:hidden;
+				overflow-y:auto;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				label{
+					display:block;
+				}
+			}
+			.news_form{
+				p{
+					color:red;
+				}
+			}
+			.appAD_subtitle{
+				@include padding_setting(t_b,1);
+				@include text_align(center);
+				border-bottom:2px solid #aaa;
+				div{
+					border-left:2px solid #aaa;
+					&:first-child{
+						border-style:none;
+					}
+				}
+			}
+			.appAD_picDetail{
+				@include padding_setting(t_b,.5);
+				input{
+					@include text_align(center);
+				}
+				div{
+					@include text_align(center);
+				}
+				#aadd_sort{
+					border-width:0;
+					width:30px;
+				}
+				#aadd_imagename{
+					border-width:0;
+				}
+			}
+			.text_setting{
+				@include text_align(center);
+				.control-label{
+					@include text_align(center);
+					padding-bottom:5px;
+				}
+			}
+			.btn_position_reset{
+				position:relative;
+				.btn_position{
+					padding-top:62px;
+					@include text_align(center);
+				}
+			}
+			.select_customer,.select_advert{
+				height:200px;
+				overflow-x:hidden;
+				overflow-y:auto;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				label{
+					width:100%;
+					font-weight:400;
+				}
+			}
+			.select_advert{
+				.sad_style{
+					@include padding_setting(t_b,.5);
+					border-bottom:1px solid #ccc;
+					input{
+					}
+				}
+			}
+			#advertSolution_d{
+				.cd_style{
+					@include padding_setting(t_b,.5);
+					border-bottom:1px solid #ccc;
+				}
+			}
+			ul{
+				li{
+					a{
+						color: nth($bwColor,1);
+					}
+					&.active{
+						a{
+							font-weight:700;
+						}
+					}
+				}
+			}
+		}
+
+	}
+	.panel-footer{
+		ul{
+			margin:10px 0;
+		}
+	}
+
+  ////Customer production////////////////////////////
+	.index_setting{
+		position:fixed;
+		width:100vw;
+		bottom:0;
+	}
+	.test_setting ul{
+		overflow:hidden;
+		list-style-type:none;
+	}
+	.test_height{
+		height:0;
+	}
+
+
+	////general settings//////////////////////////////
+	.p_l{
+		@include padding_setting(l,1.5);
+	}
+	.p_r{
+		@include padding_setting(r,1.5);
+	}
+	.p_t_b{
+		@include padding_setting(t_b,1.5);
+	}
+	.p_l_r{
+		@include padding_setting(l_r,1.5);
+	}
+	.p_l_dis{
+		@include padding_setting(l,0);
+	}
+	.p_r_dis{
+		@include padding_setting(r,0);
+	}
+	.p_l_r_dis{
+		@include padding_setting(l_r,0);
+	}
+	.p_all_dis{
+		@include padding_setting(all,0);
+	}
+	.dis_none{
+		display:none;
+	}
+	.m_b_dis{
+		margin-bottom:0;
+	}
+	.block_box{
+		height:10px;
+	}
+	////RWD settings//////////////////////////////
+	@media only screen and (min-width:768px) {
+
+	}
+	@media only screen and (max-width:767px) {
+		.navbar-nav>li {
+		    float: left;
+		}
+		.btn_m_t{
+			margin-top:10px;
+		}
+	}
+	////BS setting/////////////////////////////////
+	.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{
+		background-color: nth($amsColor,1);
+    border-color: nth($amsColor,1);
+	}
+	.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus{
+		color: nth($amsColor,1);
+	}
+	.pagination>li>a, .pagination>li>span{
+		color: nth($amsColor,1);
+	}
+	.navbar-brand{
+		padding:0;
+	}
+	.form-horizontal .form-group{
+		margin-left:0;
+		margin-right:0;
+	}
+	.btn_group{
+		.search_form{
+			.radio{
+				margin-top: 0px;
+    		margin-bottom: 0px;
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
